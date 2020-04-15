@@ -6,21 +6,18 @@ class App extends Component {
 
   state = {
     persons: [
-      {name: 'Tony'},
-      {name: 'Sue'},
-      {name: 'Harvey'}
-    ]
+      {id: 'a1', name: 'Tony'},
+      {id: 'a2', name: 'Sue'},
+      {id: 'a3', name: 'Harvey'}
+    ],
+    showPerson: false
   }
 
-  switchNameHandler = (newName) => {
-    this.setState({
-      persons: 
-        [
-          { name: newName },
-          { name: 'Suong' },
-          { name: 'Huy' }
-        ]
-    });
+  deletePersonHandler = (personIndex) => {
+    // const persons = this.state.persons.slice();
+    const persons = [...this.state.persons];
+    persons.splice(personIndex, 1);
+    this.setState({persons: persons})
   }
 
   nameChangedHandler = (event) => {
@@ -35,24 +32,47 @@ class App extends Component {
 
   }
 
+  togglePerson = () => {
+    const doesShow = this.state.showPerson;
+    this.setState({showPerson: !doesShow})
+  }
+
   render() {
-    const style = {
-      backgroundColor: 'red',
+
+
+    const StyledButton = styled.button`
+      background-color: ${props => props.alt ? 'red' : 'blue'};
+      padding: 20px;
+      &:hover{
+        background-color: red;
+      }
+    `
+
+    let persons = null;
+
+    if(this.state.showPerson){
+      persons = (
+      <div>
+        {this.state.persons.map((person, idx) => {
+          return <Person 
+          name={person.name}
+          age={person.age} 
+          key={person.id}
+          click={() => this.deletePersonHandler(idx)}/>
+          
+        })} 
+      </div>
+      )
+
     }
 
     return (
       <div className="App">
         <h1>Hello Le Family</h1>
-        <Person click={this.switchNameHandler} name={this.state.persons[0].name} nationality="North Vietnamese" changed={this.nameChangedHandler}>
-          <h2 className="h1">I am a boy</h2>
-        </Person>
-        <Person name={this.state.persons[1].name} nationality="Central Vietnamese">
-          <h2 className="h2">I am a girl</h2>
-        </Person >
-        <Person name={this.state.persons[2].name} nationality="North/Central Vietnamese">
-          <h2 className="h2">I am a boy</h2>
-        </Person >
-        <button style={style} onClick={this.switchNameHandler.bind(this,'Ha')}>Show Viet Name</button>
+
+        <StyledButton onClick={this.togglePerson}>Show Viet Name</StyledButton>
+
+        {persons}
       </div>
     );
     //return React.createElement('div', {className: 'App'}, React.createElement('h1', null,'Hi Harvey!!!'));

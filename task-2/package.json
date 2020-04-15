@@ -1,5 +1,5 @@
 {
-  "name": "react-complete-guide",
+  "name": "task-2",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -12,8 +12,5 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  },
-  "devDependencies": {
-    "styled-components": "^5.1.0"
   }
 }
